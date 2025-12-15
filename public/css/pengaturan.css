@@ -1,0 +1,284 @@
+/* ==========================================================================
+   BAGIAN 1: VARIABEL KHUSUS HALAMAN PENGATURAN
+   ========================================================================== */
+:root {
+    --primary-hover: #D7A9B8;
+    --primary-color: #88304E;
+    --card-bg: #ffffff;       /* Warna Putih untuk Kartu */
+    --text-dark: #1f2937;
+    --text-gray: #6b7280;
+    --border-color: #e5e7eb;
+}
+
+/* ==========================================================================
+   BAGIAN 2: LAYOUT DUA KOLOM (SIDEBAR & KONTEN TERPISAH)
+   --------------------------------------------------------------------------
+   Di sini kita memisahkan kotak besar menjadi dua bagian terpisah.
+   ========================================================================== */
+
+.pengaturan-container {
+    display: flex;
+    max-width: 1100px;
+    margin: 40px auto;
+    
+    /* [PENTING] align-items: flex-start membuat tinggi sidebar & konten
+       menyesuaikan isinya masing-masing (tidak dipaksa sama tinggi) */
+    align-items: flex-start;
+    
+    /* [PENTING] Memberi jarak pemisah antara Sidebar dan Form Kanan */
+    gap: 30px; 
+
+    /* Kita hilangkan background container utama agar transparan */
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* --- KARTU SIDEBAR (KIRI) --- */
+.pengaturan-sidebar {
+    width: 260px;
+    
+    /* Membuat Sidebar jadi kartu putih sendiri */
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); /* Bayangan halus */
+    border: 1px solid var(--border-color);
+    
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- KARTU KONTEN/FORMULIR (KANAN) --- */
+.pengaturan-content {
+    flex: 1; /* Mengisi sisa ruang layar */
+    
+    /* Membuat Form jadi kartu putih sendiri */
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+
+    padding: 40px 50px;
+}
+
+/* ==========================================================================
+   BAGIAN 3: GAYA MENU SIDEBAR
+   ========================================================================== */
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 8px;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: var(--text-gray);
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar-nav a:hover {
+    background-color: #fee2e2;
+    color: var(--primary-color);
+}
+
+.sidebar-nav li.active a {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 6px rgba(153, 27, 27, 0.2);
+}
+.sidebar-header {
+    margin-bottom: 20px; /* Memberi jarak antara Judul dan Menu */
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f3f4f6; /* Garis pemisah tipis */
+}
+
+.sidebar-header h3 {
+    font-size: 12px;
+    text-transform: uppercase; /* Membuat huruf jadi KAPITAL semua */
+    color: var(--text-gray);   /* Warna abu-abu */
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;     /* Jarak antar huruf sedikit renggang */
+}
+
+.sidebar-header h2 {
+    font-size: 20px;
+    color: var(--text-dark);   /* Warna hitam */
+    margin: 0;
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   BAGIAN 4: GAYA FORMULIR (INPUT, LABEL, TOMBOL)
+   ========================================================================== */
+
+.pengaturan-content h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--text-dark);
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #374151;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Kotak Input */
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    background-color: #fff;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+/* Efek saat input diklik */
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.1);
+}
+
+/* Grid layout untuk Nama Awal & Akhir */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Radio Button Gender */
+.gender-options {
+    display: flex;
+    gap: 24px;
+    margin-top: 5px;
+}
+
+.gender-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+
+.gender-options input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+    accent-color: var(--primary-color);
+}
+
+/* Tombol Simpan & Tombol Logout (Merah) */
+.btn-submit, .btn-logout-yes, .btn-logout-confirm {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    display: inline-block;
+}
+
+.btn-submit:hover, .btn-logout-yes:hover, .btn-logout-confirm:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   BAGIAN 5: KHUSUS HALAMAN LOGOUT (KARTU DI TENGAH)
+   ========================================================================== */
+
+.logout-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 18vh;
+}
+
+.logout-card {
+    background: white;
+    padding: 8rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid white;
+}
+
+.logout.gif {
+    width: 300px;  /* Coba naikkan jadi 200px, 250px, atau 300px sesuai selera */
+    
+    height: auto;  /* Biarkan auto, supaya gambar tidak gepeng/lonjong */
+    
+    /* --- Kode di bawah ini biarkan saja --- */
+    margin-bottom: 2rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logout-card h2 {
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.logout-card p {
+    color: var(--text-gray);
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.logout-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* Tombol Batal (Abu-abu) */
+.btn-logout-cancel {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    display: inline-block;
+    border: 1px solid transparent;
+}
+
+.btn-logout-cancel:hover {
+    background-color: #e5e7eb;
+    color: #111;
+}

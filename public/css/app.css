@@ -1,0 +1,104 @@
+/* ==========================================================================
+   BAGIAN 1: PENGATURAN GLOBAL (WARNA & FONT)
+   --------------------------------------------------------------------------
+   Di sini kita mengatur variabel warna utama dan background seluruh web.
+   ========================================================================== */
+:root {
+    --navbar-bg: #ffffff;     /* Warna background Navbar (Putih) */
+    --navbar-border: #e5e7eb; /* Warna garis batas Navbar */
+    --primary-color: #991b1b; /* Merah Maroon (Warna Brand Utama) */
+    --text-dark: #1f2937;     /* Warna teks hitam pudar */
+}
+
+body {
+    margin: 0; /* Hapus jarak default browser */
+    font-family: 'Inter', Arial, sans-serif; /* Font utama aplikasi */
+    
+    /* [PENTING] Mengubah warna latar belakang seluruh halaman jadi Pink Muda */
+    background-color: #FFF1F1; 
+    
+    color: var(--text-dark);
+}
+
+/* ==========================================================================
+   BAGIAN 2: NAVBAR (MENU ATAS)
+   --------------------------------------------------------------------------
+   Mengatur tampilan header yang berisi Logo dan Menu Navigasi.
+   ========================================================================== */
+
+.main-navbar {
+    background-color: var(--navbar-bg);
+    border-bottom: 1px solid var(--navbar-border);
+    padding: 12px 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03); /* Bayangan halus di bawah navbar */
+    
+    /* Membuat Navbar tetap menempel di atas saat di-scroll */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Pembungkus isi navbar agar ada di tengah */
+.navbar-container {
+    display: flex;
+    justify-content: space-between; /* Jarak maksimal antara Logo & Menu */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- LOGO --- */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+}
+
+.logo img {
+    height: 36px;
+    margin-right: 10px;
+}
+
+/* --- MENU LINK --- */
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 24px; /* Jarak antar menu */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+}
+
+/* Efek saat mouse diarahkan ke menu (Hover) */
+.nav-links a:hover {
+    color: var(--primary-color);
+    background-color: #fee2e2; /* Pink kemerahan muda */
+}
+
+/* Efek menu yang sedang aktif */
+.nav-links a.active {
+    color: var(--primary-color);
+    background-color: #fef2f2;
+}
+
+/* --- HELPER CLASS --- */
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}

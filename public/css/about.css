@@ -1,0 +1,334 @@
+
+        /* --- 1. SETUP VARIABEL WARNA --- */
+        :root {
+            --merah-terang: #C1203A;
+            --merah-gelap: #88304E;
+            --pink-muda: #FFF1F1;
+            --putih: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--pink-muda);
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* --- 2. HERO SECTION (PARALLAX PHOTO) --- */
+        .hero-section {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--putih);
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%; /* Lebih tinggi untuk efek parallax */
+            /* Foto Latar Perumahan */
+            background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        /* Overlay Merah Transparan */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(193, 32, 58, 0.85), rgba(136, 48, 78, 0.9));
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -2px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0; /* Animasi masuk */
+            transform: translateY(30px);
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-top: 20px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* --- 3. DEVELOPER SECTION (ABSTRACT SHAPES) --- */
+        .dev-section {
+            padding: 100px 20px;
+            background-color: var(--pink-muda);
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--merah-gelap);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 80px;
+        }
+
+        .dev-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px; /* Jarak antar developer */
+            flex-wrap: wrap;
+        }
+
+        .dev-card {
+            text-align: center;
+            width: 280px;
+            position: relative;
+            /* Card awal transparan untuk animasi pop-up */
+            opacity: 0; 
+            transform: scale(0.8); 
+        }
+
+        /* --- DESAIN FOTO ABSTRAK (BLOB) --- */
+        .dev-photo-wrapper {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 20px auto;
+            position: relative;
+        }
+
+        /* Background bergerak di belakang foto */
+        .blob-bg {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(193, 32, 58, 0.15); /* Merah transparan */
+            z-index: 1;
+            /* BENTUK ABSTRAK */
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morphBlob 8s ease-in-out infinite;
+        }
+
+        /* Foto Developer */
+        .dev-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            /* BENTUK ABSTRAK JUGA */
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            border: 4px solid white;
+            box-shadow: 0 10px 25px rgba(136, 48, 78, 0.2);
+            transition: transform 0.3s ease;
+            background-color: #ddd; /* Placeholder color */
+        }
+
+        /* Efek Hover Foto */
+        .dev-card:hover .dev-photo {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        /* Animasi Perubahan Bentuk Blob */
+        @keyframes morphBlob {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .dev-name { font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--merah-terang);
+    margin: 15px 0 15px 0;
+    
+    /* --- PERBAIKAN SEJAJAR --- */
+    
+    /* 1. Cadangkan tinggi minimal setara 2 baris teks */
+    min-height: 3.6rem; 
+    
+    /* 2. Atur spasi antar baris agar rapi */
+    line-height: 1.2;
+    
+    /* 3. Pastikan teks berada di tengah secara vertikal 
+       (jika namanya pendek 1 baris, dia akan tetap di tengah kotak ini) */
+    display: flex;
+    align-items: center;     /* Tengah Vertikal */
+    justify-content: center; /* Tengah Horizontal */}
+        .dev-role { color: #666; font-size: 0.9rem; font-weight: 400; background: white; padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        /* --- 4. TUTORIAL MAP (TIMELINE) --- */
+        .tutorial-section {
+            padding: 100px 20px;
+            background-color: var(--putih);
+            position: relative;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-line-bg {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #eee;
+            transform: translateX(-50%);
+        }
+
+        .timeline-line-progress {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 0%;
+            background-color: var(--merah-terang);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .tutorial-step {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 100px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tutorial-step:nth-child(odd) { flex-direction: row; }
+        .tutorial-step:nth-child(even) { flex-direction: row-reverse; }
+
+        .step-content {
+            width: 45%;
+            background: var(--pink-muda);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #ffd1d1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            /* Awalnya sembunyi untuk animasi */
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .step-content h3 { color: var(--merah-gelap); margin-top: 0; }
+        .step-number { width: 50px; height: 50px; background-color: var(--merah-terang); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 1.2rem; border: 4px solid white; box-shadow: 0 0 0 4px var(--pink-muda); transition: transform 0.3s; }
+        
+        .step-number.active { transform: scale(1.2); box-shadow: 0 0 15px rgba(193, 32, 58, 0.4); }
+        .spacer { width: 45%; }
+
+        footer { text-align: center; padding: 40px; background: var(--merah-gelap); color: white; }
+        .btn-back { position: fixed; top: 20px; left: 20px; padding: 10px 20px; background: white; color: var(--merah-terang); text-decoration: none; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 100; transition: transform 0.2s; }
+        .btn-back:hover { transform: scale(1.05); }
+
+        .tutorial-bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0; /* Di belakang konten teks */
+    pointer-events: none; /* Agar tidak mengganggu klik */
+}
+
+.floating-shape {
+    position: absolute;
+    bottom: -150px; /* Mulai dari bawah layar */
+    background: var(--merah-terang);
+    border-radius: 50%; /* Bentuk bulat */
+    opacity: 0.1; /* Transparan agar tidak mengganggu bacaan */
+    animation: floatUp 15s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.2; /* Muncul perlahan */
+    }
+    100% {
+        transform: translateY(-120vh) scale(1.5); /* Bergerak ke atas melebihi tinggi section */
+        opacity: 0;
+    }
+}
+
+/* --- VARIASI UKURAN & POSISI --- */
+/* Kita buat ukurannya acak agar terlihat natural */
+
+.floating-shape:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 12s; animation-delay: 0s; }
+.floating-shape:nth-child(2) { left: 20%; width: 40px; height: 40px; animation-duration: 18s; animation-delay: 2s; background: var(--merah-gelap); }
+.floating-shape:nth-child(3) { left: 35%; width: 120px; height: 120px; animation-duration: 25s; animation-delay: 4s; }
+.floating-shape:nth-child(4) { left: 50%; width: 60px; height: 60px; animation-duration: 15s; animation-delay: 0s; background: var(--merah-gelap); }
+.floating-shape:nth-child(5) { left: 65%; width: 90px; height: 90px; animation-duration: 20s; animation-delay: 5s; }
+.floating-shape:nth-child(6) { left: 80%; width: 50px; height: 50px; animation-duration: 22s; animation-delay: 1s; background: var(--merah-gelap); }
+.floating-shape:nth-child(7) { left: 90%; width: 100px; height: 100px; animation-duration: 14s; animation-delay: 3s; }
+.floating-shape:nth-child(8) { left: 5%; width: 30px; height: 30px; animation-duration: 30s; animation-delay: 7s; }
+
+/* Pastikan Konten Tutorial ada di DEPAN animasi */
+.timeline-container {
+    position: relative;
+    z-index: 2; /* Lebih tinggi dari z-index animasi (0) */
+}
+
+/* Cari class .dev-role dan GANTI dengan ini */
+.dev-role {
+    color: #666; 
+    font-size: 0.85rem; /* Sedikit dikecilkan agar muat */
+    font-weight: 600;   /* Agak ditebalkan biar terbaca */
+    background: white; 
+    
+    /* PENTING: Padding kiri kanan agak besar */
+    padding: 8px 20px; 
+    
+    border-radius: 50px; /* Lebih bulat (kapsul) */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    
+    /* --- PERBAIKAN SEJAJAR --- */
+    
+    /* 1. Gunakan Flexbox agar teks bisa di-tengah vertikal */
+    display: inline-flex;
+    align-items: center;      /* Tengah Vertikal */
+    justify-content: center;  /* Tengah Horizontal */
+    
+    /* 2. Paksa tinggi minimal (Cukup untuk menampung 2 baris) */
+    min-height: 50px; 
+    
+    /* 3. Batasi lebar maksimal agar teks turun ke bawah kalau kepanjangan */
+    max-width: 220px;
+    
+    /* 4. Jarak antar baris teks */
+    line-height: 1.3;
+    
+    /* 5. Jarak dari nama */
+    margin-top: 10px;
+}
+
+/* Efek saat mouse di atas role */
+.dev-card:hover .dev-role {
+    background: var(--merah-terang);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(193, 32, 58, 0.3);
+}
