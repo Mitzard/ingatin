@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Documentation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentationController extends Controller
 {
@@ -20,21 +21,27 @@ class DocumentationController extends Controller
             'document_file.max' => 'Ukuran file tidak boleh melebihi 2MB.'
         ]);
 
-        $file = $request->file('document_file');
-        $path = $file->store('documentation', 'public');
+        $path = null;
+
+        // 3. Cek apakah user upload file (gunakan nama input HTML)
+        if ($request->hasFile('document_file')) {
+
+            // A. Upload file ke Cloudinary lewat Disk 'cloudinary'
+            // Ini akan menyimpan file dan mengembalikan ID-nya (misal: ingatin_flyers/abcde.jpg)
+            $savedPath = $request->file('document_file')->store('ingatin_documentations', 'cloudinary');
+
+            // B. Ambil URL Lengkapnya (HTTPS)
+            // Penting agar di database tersimpan link lengkap, bukan cuma nama file
+            $path = Storage::disk('cloudinary')->url($savedPath);
+        }
+
+        // dd($path);
+        
+        // $path = $request->file('document_file')
+        //             ->storeOnCloudinary('ingatin_documentation')
+        //             ->getSecurePath();
         // $fileName = time() . '_' . $file->getClientOriginalName();
         // $filePath = 'documentation/' . $fileName;
-
-        // 2. Logika Kompresi dan Penyimpanan
-        // Karena kompresi harus dilakukan di Server (PHP/Library Image Intervention) 
-        // atau di Browser (JavaScript), kita hanya dapat menyimulasikan kompresi di sini.
-
-        // Jika Anda menggunakan library kompresi (misal: Image Intervention):
-        // $compressedImage = Image::make($file)->limitSize(2048)->encode('jpg', 80); 
-        // Storage::put($filePath, $compressedImage);
-        
-        // Untuk saat ini, kita simpan file asli (asumsi file sudah lolos validasi max:2048)
-        // $file->storeAs('public', $filePath); 
 
         // 3. Simpan Entri ke Database
         Documentation::create([

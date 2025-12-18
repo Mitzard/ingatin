@@ -17,8 +17,8 @@ class ScheduleRegistration extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function schedules()
+    public function activity()
     {
-        return $this->belongsTo(Schedule::class);
+        return $this->belongsTo(Schedule::class, 'activity_id');
     }
 }

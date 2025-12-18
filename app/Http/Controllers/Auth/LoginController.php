@@ -50,7 +50,7 @@ class LoginController extends Controller
         }
 
         // 4. Gagal
-        return back()->withErrors(['login_field' => 'Terdapat Kesalahan.']);
+        return back()->withErrors(['login_field' => 'Cek Kembali Atau Mungkin Kamu Bukan Warga RT 19']);
     }
 
     public function logout(Request $request)

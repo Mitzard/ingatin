@@ -59,8 +59,9 @@ class Schedule extends Model
         return 'Segera';
     }
 
-    public function documentation(): HasMany // <<< TAMBAHKAN FUNGSI INI
+    public function documentations()
     {
+        // Parameter 2 ('activity_id') adalah nama kolom foreign key di tabel documentations
         return $this->hasMany(Documentation::class, 'activity_id');
     }
 }

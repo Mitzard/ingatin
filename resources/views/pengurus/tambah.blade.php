@@ -110,9 +110,9 @@
                                 <label for="image_flyer" class="form-label fw-semibold">Upload Flyer / Poster (Opsional)</label>
                                 <input type="file" class="form-control @error('image_flyer') is-invalid @enderror"
                                     id="image_flyer" name="image_flyer" accept="image/*">
-                                <div class="form-text text-muted">
+                                <small class="form-text text-muted">
                                     Format yang didukung: JPG, PNG, JPEG. Ukuran maks: 2MB.
-                                </div>
+                                </small>
                                 @error('image_flyer')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

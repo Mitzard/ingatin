@@ -26,7 +26,7 @@
                 </div>
                 <div class="dev-info">
                     <h3 class="dev-name">Qonita Ghina Anbarputri</h3>
-                    <span class="dev-role">Frontend Developer & UI/UX Designer</span>
+                    <span class="dev-role">UI/UX Designer & Frontend Developer</span>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                 </div>
                 <div class="dev-info">
                     <h3 class="dev-name">Juliyando Akbar<br><br></h3>
-                    <span class="dev-role">Frontend Developer & UI/UX Designer</span>
+                    <span class="dev-role">Business Analyst & Frontend Developer</span>
                 </div>
             </div>
         </div>

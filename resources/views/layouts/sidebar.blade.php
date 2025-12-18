@@ -18,6 +18,9 @@
             <li><a href="{{ route('kelola.kegiatan') }}"
                     class="p-2 d-block rounded text-decoration-none {{ request()->routeIs('kelola.kegiatan') ? 'bg-danger text-white fw-bold' : 'text-light' }}"><i
                         class="bi bi-calendar-event me-2"></i> Kelola Jadwal</a></li>
+            <li><a href="{{ route('kelola.warga') }}"
+                    class="p-2 d-block rounded text-decoration-none {{ request()->routeIs('kelola.warga') ? 'bg-danger text-white fw-bold' : 'text-light' }}"><i
+                        class="bi bi-people-fill me-2"></i> Kelola Warga</a></li>
 
             {{-- Logout --}}
             <li class="mb-3"><a href="{{ route('pengaturan') }}"

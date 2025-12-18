@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ScheduleController extends Controller
 {
@@ -54,8 +55,22 @@ class ScheduleController extends Controller
 
         // 3. Cek apakah user upload file (gunakan nama input HTML)
         if ($request->hasFile('image_flyer')) {
-            $path = $request->file('image_flyer')->store('flyers', 'public');
+
+            // A. Upload file ke Cloudinary lewat Disk 'cloudinary'
+            // Ini akan menyimpan file dan mengembalikan ID-nya (misal: ingatin_flyers/abcde.jpg)
+            $savedPath = $request->file('image_flyer')->store('ingatin_flyers', 'cloudinary');
+
+            // B. Ambil URL Lengkapnya (HTTPS)
+            // Penting agar di database tersimpan link lengkap, bukan cuma nama file
+            $path = Storage::disk('cloudinary')->url($savedPath);
         }
+
+        // dd($path);
+
+        // kode lama
+        // if ($request->hasFile('image_flyer')) {
+        //     $path = $request->file('image_flyer')->store('flyers', 'public');
+        // }
 
         // 4. Simpan ke Database
         Schedule::create([
@@ -124,13 +139,26 @@ class ScheduleController extends Controller
         $path = $schedule->image_flyer_path; // Default: Pakai foto lama
 
         if ($request->hasFile('image_flyer')) {
-            // Hapus foto lama jika ada
-            if ($schedule->image_flyer_path) {
-                Storage::disk('public')->delete($schedule->image_flyer_path);
-            }
-            // Upload baru dan timpa variabel $path
-            $path = $request->file('image_flyer')->store('image-flyers', 'public');
+            // Kita langsung upload yang baru saja. 
+            // Menghapus file lama di Cloudinary agak rumit butuh Public ID,
+            // untuk pemula cukup timpa URL-nya saja di database.
+
+            $uploadedFileUrl = $request->file('image_flyer')
+                ->storeOnCloudinary('ingatin_flyers')
+                ->getSecurePath();
+
+            // Update variabel $path dengan URL gambar baru
+            $path = $uploadedFileUrl;
         }
+
+        // if ($request->hasFile('image_flyer')) {
+        //     // Hapus foto lama jika ada
+        //     if ($schedule->image_flyer_path) {
+        //         Storage::disk('public')->delete($schedule->image_flyer_path);
+        //     }
+        //     // Upload baru dan timpa variabel $path
+        //     $path = $request->file('image_flyer')->store('image-flyers', 'public');
+        // }
 
         // --- 2. Update Data Diri ---
         $schedule->update([

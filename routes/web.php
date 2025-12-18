@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\WargaController;
+use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Auth\LoginController;
@@ -27,7 +28,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', EnsureUserIsActive::class)->group(function () {
     Route::get('/kalender', [ScheduleController::class, 'index'])->name('warga.calendar');
     Route::get('/events', [ScheduleController::class, 'getEvents'])->name('events.get');
 
@@ -60,5 +61,6 @@ Route::middleware(['auth', 'role:pengurus'])->group(function () {
     Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'deleteEvent'])->name('schedules.delete');
     Route::post('/schedule/{id}', [ScheduleController::class, 'update']);
     Route::post('/schedule/{id}/resize', [ScheduleController::class, 'resize']);
-
+    Route::get('/kelola-warga', [PengurusController::class, 'index'])->name('kelola.warga');
+    Route::patch('/kelola-warga/{id}/toggle-status', [PengurusController::class, 'toggleStatus'])->name('kelola.warga.toggle');
 });

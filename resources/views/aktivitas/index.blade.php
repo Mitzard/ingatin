@@ -22,7 +22,7 @@
 
             /* 2. AREA FOOTER CARD */
             .card-footer-kegiatan {
-                background-color: #888888 !important;
+                background-color: #dedede !important;
                 /* Warna Footer (Lebih Gelap dari Body Card) */
                 border-top: 1px solid rgba(255, 255, 255, 0.066) !important;
             }
@@ -49,7 +49,7 @@
 
             /* Belum Terdaftar */
             .text-success-status {
-                color: #8bff89 !important;
+                color: #039a00 !important;
             }
 
             /* Terdaftar (Hijau Konsisten) */
@@ -76,7 +76,7 @@
             </div> --}}
         </div>
 
-        <div class="card mb-4 border-danger border-3 shadow-sm">
+        <div class="card mb-4 border-3 shadow-sm" style="border-color: #952638">
             <div class="card-body">
                 <form action="{{ route('daftar') }}" method="GET" class="d-flex">
                     <input type="text" name="search" class="form-control me-2"

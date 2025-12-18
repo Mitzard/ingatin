@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PasswordUpdateRequest;
 use App\Http\Requests\UpdateScheduleRequest;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 
 class PengurusController extends Controller
 {
@@ -90,19 +93,19 @@ class PengurusController extends Controller
             $validated['end'] = null;
         }
 
-        // 3. Logika File (Sama seperti sebelumnya)
         if ($request->hasFile('image_flyer')) {
-            if ($activity->image_flyer_path && Storage::disk('public')->exists($activity->image_flyer_path)) {
-                Storage::disk('public')->delete($activity->image_flyer_path);
-            }
-            $path = $request->file('image_flyer')->store('image-flyers', 'public');
+            $savedPath = $request->file('image_flyer')->store('ingatin_flyers', 'cloudinary');
 
-            // Masukkan path ke array validated
+            // B. Ambil URL HTTPS lengkap
+            // Kita ubah ID tadi menjadi link https://res.cloudinary...
+            $path = Storage::disk('cloudinary')->url($savedPath);
+
+            // C. Masukkan URL baru ke array database
             $validated['image_flyer_path'] = $path;
         }
 
-        // 4. BERSIH-BERSIH (PENTING!)
-        // Hapus field bantuan yang tidak ada di kolom database agar tidak Error SQL
+        // dd($path);
+        
         unset($validated['start_time']); // Hapus start_time
         unset($validated['end_time']);   // Hapus end_time
         unset($validated['image_flyer']); // Hapus object file mentah (karena sudah kita ambil path-nya)
@@ -129,5 +132,28 @@ class PengurusController extends Controller
         $user->save();
 
         return redirect()->route('pengaturan')->with('success', 'Kata sandi berhasil diperbarui!');
+    }
+
+    public function index()
+    {
+        $warga = User::where('role', '!=', 'pengurus')
+            ->with(['registrations.activity'])
+            ->latest()
+            ->paginate(10);
+
+        return view('pengurus.kelola_warga', compact('warga'));
+    }
+
+    public function toggleStatus($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Ubah status (Jika 1 jadi 0, Jika 0 jadi 1)
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        $statusMsg = $user->is_active ? 'diaktifkan kembali.' : 'dinonaktifkan/blokir.';
+
+        return back()->with('success', "Warga atas nama {$user->nama_lengkap} berhasil {$statusMsg}");
     }
 }

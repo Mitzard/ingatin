@@ -72,17 +72,32 @@ class ScheduleRegistrationController extends Controller
             $activity = Schedule::findOrFail($activityId);
 
             // 2. Susun Pesan
-            $pesan = "Halo *" . $user->nama_lengkap . "*! 👋\n\n";
-            $pesan .= "Terima kasih telah mendaftar di kegiatan:\n";
-            $pesan .= "📅 *" . $activity->title . "*\n";
-            $pesan .= "📍 Lokasi: " . $activity->lokasi . "\n";
-            // Pastikan format tanggal sesuai keinginan
-            $pesan .= "🕒 Waktu: " . $activity->start->translatedFormat('d F Y, H:i') . " WIB\n\n";
-            $pesan .= "Harap hadir tepat waktu ya. Terima kasih!";
+            $formattedDate = $activity->start->translatedFormat('l, d F Y');
+            $formattedTime = $activity->start->translatedFormat('H:i');
+
+            $pesan = "📢 *KONFIRMASI PENDAFTARAN KEGIATAN RT.19*\n\n";
+            $pesan .= "Yth. Bpk/Ibu *" . $user->nama_lengkap . "*,\n\n";
+            $pesan .= "Pendaftaran Anda telah kami terima. Berikut adalah detail kegiatan yang akan Anda ikuti:\n\n";
+
+            // Bagian Detail - Rapi dengan Emoji
+            $pesan .= "📌 *Kegiatan:* " . $activity->title . "\n";
+            $pesan .= "🗓️ *Hari/Tanggal:* " . $formattedDate . "\n";
+            $pesan .= "🕒 *Pukul:* " . $formattedTime . " WIB\n";
+            $pesan .= "📍 *Lokasi:* " . $activity->lokasi . "\n\n";
+
+            // Catatan / Imbauan
+            $pesan .= "📝 *Catatan:*\n";
+            $pesan .= "Harap Baca Kembali Deskripsi Kegiatan Yang Tertera Pada Website https://ingatin.vercel.app/ \n";
+            $pesan .= "Mohon hadir 15 menit sebelum acara dimulai untuk registrasi ulang.\n\n";
+
+            $pesan .= "Demikian informasi ini kami sampaikan. Sampai jumpa di lokasi!\n\n";
+            $pesan .= "Salam Hormat,\n";
+            $pesan .= "*Pengurus RT.19*";
+            $pesan .= "\n\n_Pesan ini dikirim otomatis oleh sistem._";
 
             // 3. Cek nomor HP user & Kirim
             // GANTI 'no_hp' dengan nama kolom hp di tabel users kamu (misal: 'whatsapp' atau 'phone')
-            $targetNomor = $user->nomor_telepon; 
+            $targetNomor = $user->nomor_telepon;
 
             if ($targetNomor) {
                 // Panggil fungsi kirim yang ada di bawah
@@ -101,7 +116,7 @@ class ScheduleRegistrationController extends Controller
 
     private function sendFonnte($target, $message)
     {
-        $token = env('FONNTE_TOKEN'); 
+        $token = env('FONNTE_TOKEN');
 
         $curl = curl_init();
 
@@ -151,6 +166,7 @@ class ScheduleRegistrationController extends Controller
     {
         // 1. Ambil status pendaftaran user saat ini
         // Menggunakan with('registrations') dari Model Schedule akan lebih efisien jika sudah di-eager load
+        $activity->load('documentations');
         $isRegistered = ScheduleRegistration::where('user_id', Auth::id())
             ->where('activity_id', $activity->id)
             ->exists();
@@ -164,7 +180,7 @@ class ScheduleRegistrationController extends Controller
     {
         $search = $request->get('search');
 
-        $activity->load('documentation.uploader');
+        $activity->load('documentations.uploader');
 
         // Query dasar untuk mengambil semua pendaftar kegiatan ini
         $registrations = ScheduleRegistration::where('activity_id', $activity->id)
@@ -183,7 +199,7 @@ class ScheduleRegistrationController extends Controller
             ->paginate(10) // Pagination 10 baris
             ->withQueryString();
 
-        $documentations = $activity->documentation()
+        $documentations = $activity->documentations()
             ->with('uploader')
             ->latest()
             ->paginate(9, ['*'], 'doc_page');

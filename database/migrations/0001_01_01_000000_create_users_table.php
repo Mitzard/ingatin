@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('pekerjaan')->nullable();
 
             $table->enum('role', ['warga', 'pengurus'])->default('warga');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

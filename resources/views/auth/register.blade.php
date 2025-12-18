@@ -181,7 +181,7 @@
                 <div class="mb-3">
                     <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
                     <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror"
-                        id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda" required
+                        id="nama_lengkap" name="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda"
                         value="{{ old('nama_lengkap') }}">
                     @error('nama_lengkap')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -192,7 +192,7 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Alamat Email</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                        name="email" placeholder="Contoh: nama@domain.com" required value="{{ old('email') }}">
+                        name="email" placeholder="Contoh: nama@domain.com" value="{{ old('email') }}">
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -202,8 +202,9 @@
                 <div class="mb-3">
                     <label for="nomor_telepon" class="form-label">Nomor HP</label>
                     <input type="text" class="form-control @error('nomor_telepon') is-invalid @enderror"
-                        id="nomor_telepon" name="nomor_telepon" placeholder="Masukkan Nomor HP Aktif (cth: 0812xxxxxx)"
-                        required value="{{ old('nomor_telepon') }}">
+                        id="nomor_telepon" name="nomor_telepon" maxlength="13" inputmode="numeric"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Masukkan Nomor HP Aktif (cth: 0812xxxxxx)"
+                        value="{{ old('nomor_telepon') }}">
                     @error('nomor_telepon')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -213,7 +214,9 @@
                 <div class="mb-3">
                     <label for="nik" class="form-label">NIK (16 Digit)</label>
                     <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik"
-                        name="nik" placeholder="Masukkan 16 Digit NIK Anda" required value="{{ old('nik') }}">
+                        name="nik" maxlength="16" inputmode="numeric"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"placeholder="Masukkan 16 Digit NIK Anda"
+                        value="{{ old('nik') }}">
                     @error('nik')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -224,8 +227,7 @@
                     <label for="password" class="form-label">Kata Sandi</label>
                     <div class="input-group has-validation">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            id="password" name="password" placeholder="Masukkan Kata Sandi (minimal 8 karakter)"
-                            required>
+                            id="password" name="password" placeholder="Masukkan Kata Sandi (minimal 8 karakter)">
                         <button class="btn btn-toggle-password btn-light border toggle-password" type="button"
                             data-target="password">
                             <i class="bi bi-eye-slash-fill"></i>
@@ -242,7 +244,7 @@
                     <div class="input-group has-validation">
                         <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                             id="password_confirmation" name="password_confirmation"
-                            placeholder="Masukkan Kembali Kata Sandi" required>
+                            placeholder="Masukkan Kembali Kata Sandi">
                         <button class="btn btn-toggle-password btn-light border toggle-password" type="button"
                             data-target="password_confirmation">
                             <i class="bi bi-eye-slash-fill"></i>
@@ -254,7 +256,7 @@
                 </div>
 
                 <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="dataBenar" required>
+                    <input class="form-check-input" type="checkbox" id="dataBenar">
                     <label class="form-check-label" for="dataBenar">
                         Saya yakin data yang saya isi sudah benar
                     </label>

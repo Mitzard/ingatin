@@ -27,15 +27,54 @@
 
                             {{-- Area Foto Profil --}}
                             <div class="text-center mb-4">
-                                <img src="{{ Auth::user()->profile_photo_url }}" alt="Foto Profil"
-                                    class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
 
-                                <input type="file" class="form-control @error('profile_photo') is-invalid @enderror"
-                                    name="profile_photo" accept="image/*">
-                                <div class="form-text text-muted">Max. 2MB. Diperlukan untuk validasi!</div>
-                                @error('profile_photo')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
+                                {{-- 1. AREA PREVIEW FOTO PROFIL --}}
+                                <div class="position-relative d-inline-block">
+                                    {{-- Kita beri ID "profile-preview" agar bisa diakses Javascript --}}
+                                    @if (Auth::user()->profile_photo_path)
+                                        <img id="profile-preview" src="{{ Auth::user()->profile_photo_path }}"
+                                            alt="Foto Profil" class="rounded-circle mb-3 border border-3 shadow-sm"
+                                            style="width: 150px; height: 150px; object-fit: cover;">
+                                    @else
+                                        <img id="profile-preview"
+                                            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nama_lengkap) }}&size=150"
+                                            alt="Default Avatar" class="rounded-circle mb-3 border border-3 shadow-sm"
+                                            style="width: 150px; height: 150px; object-fit: cover;">
+                                    @endif
+                                </div>
+
+                                {{-- 2. INPUT FILE MODEL "WIDE BOX" --}}
+                                <div class="mt-2">
+                                    {{-- Label ini bertindak sebagai tombol input yang luas --}}
+                                    <label for="profile_photo" class="form-label w-100 cursor-pointer">
+
+                                        <div class="d-flex flex-column align-items-center justify-content-center p-4 border border-2 border-secondary border-opacity-25 rounded-3 bg-light hover-effect"
+                                            style="border-style: dashed !important; cursor: pointer; transition: all 0.3s ease;">
+
+                                            {{-- Icon Upload --}}
+                                            <i class="bi bi-cloud-arrow-up-fill text-primary fs-2 mb-2"></i>
+
+                                            {{-- Teks Instruksi --}}
+                                            <span class="fw-semibold text-dark">Klik untuk ganti foto</span>
+                                            <span class="small text-muted">Format: JPG/PNG. Maks: 2MB</span>
+
+                                            {{-- Input File ASLI (Disembunyikan tapi berfungsi) --}}
+                                            {{-- onchange="previewImage(event)" akan memicu script preview --}}
+                                            <input type="file"
+                                                class="d-none @error('profile_photo') is-invalid @enderror"
+                                                id="profile_photo" name="profile_photo" accept="image/*"
+                                                onchange="previewImage(this)">
+                                        </div>
+                                    </label>
+
+                                    {{-- Pesan Error --}}
+                                    @error('profile_photo')
+                                        <div class="invalid-feedback d-block text-danger mt-2 fw-semibold">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
                             </div>
 
                             {{-- Input Data Diri (Nama, NIK, Email, No. HP) --}}
@@ -169,4 +208,31 @@
 
         </div>
     </div>
+
+    <script>
+        function previewImage(input) {
+            var preview = document.getElementById('profile-preview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    // Mengganti src gambar dengan hasil bacaan file lokal
+                    preview.src = e.target.result;
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+    {{-- 4. STYLE TAMBAHAN (Opsional untuk efek hover) --}}
+    <style>
+        .hover-effect:hover {
+            background-color: #e9ecef !important;
+            /* Abu-abu sedikit lebih gelap saat di-hover */
+            border-color: #0d6efd !important;
+            /* Border jadi biru saat di-hover */
+        }
+    </style>
 @endsection

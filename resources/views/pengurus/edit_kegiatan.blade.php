@@ -23,7 +23,8 @@
                     <div class="card-body p-4">
 
                         {{-- Form Aksi diarahkan ke ScheduleController@update --}}
-                        <form action="{{ route('schedules.update', $activity->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('schedules.update', $activity->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             {{-- Laravel memerlukan metode PUT/PATCH untuk update sumber daya --}}
                             @method('PUT')
@@ -46,12 +47,14 @@
                                     <label class="form-label fw-bold">Waktu Mulai <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         {{-- Ambil tanggal saja (Y-m-d) --}}
-                                        <input type="date" class="form-control" name="start" 
-                                            value="{{ old('start', \Carbon\Carbon::parse($activity->start)->format('Y-m-d')) }}" required>
-                                        
+                                        <input type="date" class="form-control" name="start"
+                                            value="{{ old('start', \Carbon\Carbon::parse($activity->start)->format('Y-m-d')) }}"
+                                            required>
+
                                         {{-- Ambil jam saja (H:i) --}}
-                                        <input type="time" class="form-control" name="start_time" 
-                                            value="{{ old('start_time', \Carbon\Carbon::parse($activity->start)->format('H:i')) }}" required>
+                                        <input type="time" class="form-control" name="start_time"
+                                            value="{{ old('start_time', \Carbon\Carbon::parse($activity->start)->format('H:i')) }}"
+                                            required>
                                     </div>
                                 </div>
 
@@ -59,10 +62,10 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold">Waktu Selesai</label>
                                     <div class="input-group">
-                                        <input type="date" class="form-control" name="end" 
+                                        <input type="date" class="form-control" name="end"
                                             value="{{ old('end', $activity->end ? \Carbon\Carbon::parse($activity->end)->format('Y-m-d') : '') }}">
-                                        
-                                        <input type="time" class="form-control" name="end_time" 
+
+                                        <input type="time" class="form-control" name="end_time"
                                             value="{{ old('end_time', $activity->end ? \Carbon\Carbon::parse($activity->end)->format('H:i') : '') }}">
                                     </div>
                                 </div>
@@ -92,21 +95,18 @@
 
                             <div class="mb-4">
                                 <label for="image_flyer" class="form-label fw-bold">Update Flyer (Opsional)</label>
-
-                                {{-- Tampilkan flyer lama jika ada --}}
                                 @if ($activity->image_flyer_path)
                                     <div class="mb-2 p-2 border rounded bg-light" style="width: fit-content;">
                                         <div class="small text-muted mb-1">Flyer Saat Ini:</div>
-                                        <img src="{{ asset('storage/' . $activity->image_flyer_path) }}" alt="Flyer Lama"
+                                        <img src="{{ $activity->image_flyer_path }}" alt="Flyer Lama"
                                             class="img-fluid rounded" style="max-height: 150px;">
                                     </div>
                                 @endif
-
                                 <input type="file" class="form-control @error('image_flyer') is-invalid @enderror"
                                     id="image_flyer" name="image_flyer" accept="image/*">
-                                <div class="form-text text-muted">
+                                <small class="form-text text-muted">
                                     Biarkan kosong jika tidak ingin mengubah flyer. Max: 2MB.
-                                </div>
+                                </small>
                                 @error('image_flyer')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

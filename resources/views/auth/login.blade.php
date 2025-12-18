@@ -14,7 +14,7 @@
     <style>
         /* ... (CSS Anda di sini - tidak diubah untuk menjaga desain) ... */
         body {
-            background-image: url("{{ asset('images/background-image.jpg') }}"); 
+            background-image: url("{{ asset('images/background-image.jpg') }}");
             background-color: rgba(0, 0, 0, 0.5);
             background-blend-mode: darken;
             background-size: cover;
@@ -177,7 +177,7 @@
                 <div class="mb-3">
                     <label for="login_field" class="form-label">Email / No. HP</label>
                     <input type="text" class="form-control @error('login_field') is-invalid @enderror"
-                        id="login_field" name="login_field" placeholder="Masukkan Email atau Nomor HP Anda" required
+                        id="login_field" name="login_field" placeholder="Masukkan Email atau Nomor HP Anda"
                         value="{{ old('login_field') }}">
                     @error('login_field')
                         <div class="invalid-feedback">
@@ -191,8 +191,9 @@
                     <label for="password" class="form-label">Kata Sandi</label>
                     <div class="input-group has-validation">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            id="password" name="password" placeholder="Masukkan Kata Sandi" required>
-                        <button class="btn btn-toggle-password btn-light toggle-password" type="button" data-target="password">
+                            id="password" name="password" placeholder="Masukkan Kata Sandi">
+                        <button class="btn btn-toggle-password btn-light toggle-password" type="button"
+                            data-target="password">
                             <i class="bi bi-eye-slash-fill"></i>
                         </button>
                         @error('password')
